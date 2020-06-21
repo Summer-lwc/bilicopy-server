@@ -1,19 +1,28 @@
 var dbConfig = require('../util/dbconfig');
 
 
-getVideo = (req,res) => {
-    var sql = 'select * from video';
+getVideoList = (req,res) => {
+  var pageSize = req.query.pageSize;
+  var currentPage = req.query.currentPage;
+  var keyword = req.query.keyword;
+  var start = (currentPage*pageSize);
+  var pagesql = 'SELECT COUNT(*) FROM video WHERE title LIKE "%'+keyword+'%";SELECT * FROM video WHERE title LIKE "%'+keyword+'%" LIMIT '+start+','+pageSize;
     var sqlArr = [];
-    var callBack = (err,data) => {
+    var callBack1 = async (err,data) => {
       if(err){
         console.log('连接出错',err);
       }else{
-        res.send({
-          'list': data
-        })
+        var total = data[0][0]['COUNT(*)'];
+        var videoList = data[1];
+        res.send(
+          JSON.stringify({
+            msg:'操作成功',
+            status:'200',
+            totalPages:total,
+            videoList:videoList}));
       }
     }
-  dbConfig.sqlConnect(sql, sqlArr, callBack);
+  dbConfig.sqlConnect(pagesql, sqlArr, callBack1);
 }
 
-module.exports = {getVideo};
+module.exports = {getVideoList};

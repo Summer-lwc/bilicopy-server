@@ -5,13 +5,13 @@ module.exports = {
         host:'localhost',
         port: 3306,
         user:'root',
-        password: '12345678',
-        database: 'bilicopy'
+        password: '123456',
+        database: 'bilicopy',
+        multipleStatements: true 
     },
     sqlConnect: function(sql,sqlArr,callBack){
         var pool = mysql.createPool(this.config);
         pool.getConnection((err, conn) => {
-            console.log('12345');
             if(err){
                 console.log('连接失败');
                 return;

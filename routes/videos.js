@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var user = require('../controllers/videoControllers')
+var video = require('../controllers/videoControllers')
 /* GET home page. */
-router.get('/getVideo', user.getVideo);
+router.get('/search', video.getVideoList);
 
 module.exports = router;
