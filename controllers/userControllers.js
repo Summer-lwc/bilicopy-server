@@ -30,19 +30,20 @@ getUser = (req,res) => {
 }
 
 insertUser = (req,res) => {
-    var sql = 'INSERT INTO user (username,pwd) VALUES ("' + req.body.username + '","' + req.body.pwd +'")';
+    var sql = 'INSERT INTO user (username,pwd) VALUES ("' + req.body.username + '","' + req.body.pwd +'"); select * from user where username = "' + req.body.username +'"';
     var sqlArr = [];
     var callBack = (err,data) => {
       if(err){
         console.log('连接出错',err);
       }else{
         const token = jwt.sign(req.body, "bilicopy", { expiresIn: '1day' });
+        console.log(data[1][0]);
             res.send({
                 code:200,
                 message:'注册登陆成功',
                 token: token,
-                userImgurl:data[0].imgUrl,
-                username:data[0].username
+                userImgurl:data[1][0].imgUrl,
+                username:data[1][0].username
             });
       }
     }
