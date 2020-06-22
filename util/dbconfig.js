@@ -2,10 +2,10 @@ const mysql = require('mysql');
 
 module.exports = {
     config:{
-        host:'localhost',
+        host:'47.100.38.187',
         port: 3306,
         user:'root',
-        password: '123456',
+        password: '836651064.Lwc',
         database: 'bilicopy',
         multipleStatements: true 
     },
